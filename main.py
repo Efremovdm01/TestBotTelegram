@@ -4,11 +4,36 @@ import telebot
 from telebot import types
 from random import shuffle
 
+
 bot = telebot.TeleBot('5886265811:AAFyIIGaJzICuITu426SRu_9Az0nSP6cgmk')
 bot.set_webhook()
 
+#agent_photo = open(f"{new_agent_photo}.jpeg","rb")
+
+Sage_photo = open("Sage.jpeg","rb")
+Brimstone_photo = open("Brimstone.jpeg","rb")
+Viper_photo = open("viper.jpeg","rb")
+Omen_photo = open("omen.jpeg","rb")
+Killjoy_photo = open("killjoy.jpeg","rb")
+Cypher_photo = open("cypher.jpeg","rb")
+Sova_photo = open("sova.jpeg","rb")
+Phoenix_photo = open("phoenix.jpeg","rb")
+Jett_photo = open("jett.jpeg", "rb")
+Reyna_photo = open("reyna.jpeg", "rb")
+Raze_photo = open("raze.jpeg", "rb")
+Breach_photo = open("breach.jpeg", "rb")
+Skye_photo = open("skye.jpeg", "rb")
+Yoru_photo = open("yoru.jpeg", "rb")
+Astra_photo = open("astra.jpeg", "rb")
+KAYO_photo = open("kayo.jpeg", "rb")
+Chamber_photo = open("chamber.jpeg", "rb")
+Neon_photo = open("neon.jpeg", "rb")
+Fade_photo = open("fade.jpeg", "rb")
+Harbor_photo = open("harbor.jpeg","rb")
+
+
 agents = {
-'Brimestone' : ['Пассивный','Командный игрок','Много общаюсь','Саппорт','Легкий','Скиллы'],
+'Brimstone' : ['Пассивный','Командный игрок','Много общаюсь','Саппорт','Легкий','Скиллы'],
 'Viper' : ['Пассивный','Командный игрок/Полагаюсь на себя','Много общаюсь/Молча концентрируюсь','Люркер','Сложный','Скиллы'],
 'Omen' : ['Активный/Пассивный','Командный игрок/Полагаюсь на себя','Много общаюсь','Саппорт','Легкий','Скиллы'],
 'Killjoy' : ['Пассивный','Командный игрок/Полагаюсь на себя','Много общаюсь/Молча концентрируюсь','Люркер','Легкий','Скиллы'],
@@ -32,7 +57,6 @@ agents = {
 
 id = 0
 
-
 def make_pair(x,y):
     return lambda n: x if n==0 else y
 def first_element(p):
@@ -46,14 +70,14 @@ second_qeustion = "Где бы вы предпочли находиться? В 
 third_qeustion = "Полагаетесь ли вы на своих сокомандников или чаще надеетесь только на себя?"
 forth_question = "Много ли вы говорите во время игры или стараетесь оставаться немногословным?"
 fifth_question = "Какой стиль ведения игры вам ближе?"
-six_question = "Аим или скиллы?"
+six_question = "При возникновении опастной ситуации на что вы будете полагаться: стрельба(аим) или способнойсти персонажа(скиллы)?"
 
 
 first_answers = (make_pair('Да, я давно играю', 'Сложный'),
                  make_pair('Нет, я новичок в этом жанре игр', 'Легкий'),)
 
 second_answers = (make_pair('Я люблю быть в гуще событий', 'Активный'),
-                  make_pair('Нет, я координирую действия, оставаясь далеко', 'Пассивный'),
+                  make_pair('Я люблю оставаться в тылу', 'Пассивный'),
                   make_pair('И то и другое', 'Пассивный/Активный'),)
 
 third_answers =  (make_pair('Я люблю играть в команде', 'Командный игрок'),
@@ -61,13 +85,13 @@ third_answers =  (make_pair('Я люблю играть в команде', 'К�
                   make_pair('Зависит от ситуации', 'Командный игрок/Полагаюсь на себя'),)
 
 forth_answers =  (make_pair('Я люблю много общаться', 'Много общаюсь'),
-                  make_pair('Нет, я предпочитаю молча концетрироваться', 'Молча концентрируюсь'),
+                  make_pair('Молча концетрируюсь', 'Молча концентрируюсь'),
                   make_pair('По настроению', 'Много общаюсь/Молча концентрируюсь'),)
 
-fifth_answers =  (make_pair('Я люблю расчитывать на свои собственные силы', 'Керри'),
-                  make_pair('Я предпочту реализовать проработанную тактику', 'Саппорт'),
-                  make_pair('Могу пойти на риск, если это того стоит', 'Саппорт/Керри'),
-                  make_pair('Я люблю принимать важные стратегические решения', 'Люркер'),)
+fifth_answers =  (make_pair('Расчитываю на свои силы', 'Керри'),
+                  make_pair('Предпочту проработанную тактику', 'Саппорт'),
+                  make_pair('Могу пойти на риск, если надо', 'Саппорт/Керри'),
+                  make_pair('Расчитываю на стратегию', 'Люркер'),)
 
 six_answers =  (make_pair('Аим', 'Аим'),
                 make_pair('Скиллы', 'Скиллы'))
@@ -83,32 +107,34 @@ question_six = make_pair(six_question,six_answers)
 
 list_of_questions = [question_one,question_two,question_three,question_four,question_five,question_six]
 
-print(first_element(second_element(list_of_questions[id])[0]))
-print(len(second_element(list_of_questions[1])))
-#first_element(second_element(list_of_questions[id])[0])
 keywords = []
+id_of_first = 0
 
 def get_question_by_id(id):
     return list_of_questions[id]
-
 
 @bot.message_handler(commands=["start"])
 def get_start(message):
     global id
     global keywords
+    global id_of_first
+
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    #btn1 = types.KeyboardButton("Старт")
+    #markup.add(btn1)
+    message1 = bot.send_message(message.chat.id,
+                     text="Привет! Я тестовый бот для Valorant!".format(
+                         message.from_user), reply_markup=markup)
+    id_of_first = message1.id
     id = 0
-    #bot.clear_step_handler(message)
     keywords.clear()
-    markup = types.InlineKeyboardMarkup(row_width=1)
     i = 0
     keyboard = types.InlineKeyboardMarkup(row_width=1)
     for i in range(0,len(second_element(list_of_questions[id]))):
         keyboard.row(telebot.types.InlineKeyboardButton(first_element(second_element(list_of_questions[id])[i]),
                                                         callback_data = f"{i}"))
-        #markup.add(keyboard)
         i+=1
 
-    #keywords.append(second_element(second_element(list_of_questions[id])[i]))
     bot.send_message(message.chat.id,first_element(list_of_questions[id]), reply_markup=keyboard)
 
 def get_next_question():
@@ -118,70 +144,74 @@ def get_next_question():
 def call(call):
     global id
     global keywords
+    global agents_photo
     print(id,len(list_of_questions))
     if call.data == 'restart':
         print("call.data == restart")
+        bot.delete_message(call.message.chat.id, id_of_first) #Удаление приветствия
+        bot.delete_message(call.message.chat.id, call.message.id-1) # Удаление фото агента
+        bot.delete_message(call.message.chat.id, call.message.id) # Удаление кнопки "пройти заново"
+
         id = 0
         keywords.clear()
         get_start(call.message)
         return
 
     if call.message:
+
         list_of_current_keys = []
         i = 0
         for i in range(0, len(second_element(list_of_questions[id]))):
             list_of_current_keys.append(i)
             i += 1
 
-        print(list_of_current_keys)
-        print(call.data)
         if int(call.data) in list_of_current_keys:
-            print(second_element(second_element(list_of_questions[id])[int(call.data)]))
+
             keywords.append(second_element(second_element(list_of_questions[id])[int(call.data)]))
             id+=1
             if id == len(list_of_questions):
-                print(keywords)
+                bot.delete_message(call.message.chat.id, call.message.id) #Удаление последнего сообщения
+
                 best_agent = get_analize(keywords)
-                print(best_agent)
-                markup = types.InlineKeyboardMarkup(row_width=1)
-                btn1 = types.InlineKeyboardButton("Пройти заново",
+
+                markup = types.InlineKeyboardMarkup(row_width=2)
+                restart_button = types.InlineKeyboardButton("Пройти заново",
                                                       callback_data='restart')
-                markup.add(btn1)
-                bot.send_message(call.message.chat.id, f"Вам лучше играть на {best_agent}",
+                markup.add(restart_button)
+
+                if best_agent == "KAY/O":
+                    print(best_agent)
+                    best_agent = "KAYO"
+                    #new_best_agent_photo = best_agent + "_photo"
+                    #print(new_best_agent_photo)
+                    #new_best_agent_photo = "KAYO_photo"
+                    agent_photo = open(f"{best_agent}.jpeg", "rb")
+                    bot.send_photo(call.message.chat.id,agent_photo)
+                    message1 = bot.send_message(call.message.chat.id, f"Вам лучше играть на {best_agent}",
                                      reply_markup=markup)
+
+                else:
+                    print(best_agent)
+                    #new_best_agent_photo = best_agent + "_photo"
+                    agent_photo = open(f"{best_agent}.jpeg", "rb")
+                    print(best_agent)
+                    bot.send_photo(call.message.chat.id,agent_photo)
+                    print(best_agent)
+                    print(keywords)
+                    message1 = bot.send_message(call.message.chat.id, f"Вам лучше играть на {best_agent}",
+                                                reply_markup=markup)
+
             else:
                 i = 0
-                keyboard = types.InlineKeyboardMarkup(row_width=1)
+                keyboard = types.InlineKeyboardMarkup(row_width=2)
                 for i in range(0, len(second_element(list_of_questions[id]))):
                     keyboard.row(
                         telebot.types.InlineKeyboardButton(first_element(second_element(list_of_questions[id])[i]),
                                                                callback_data = f"{i}"))
                     i += 1
-                bot.send_message(call.message.chat.id, first_element(list_of_questions[id]), reply_markup=keyboard)
+                message1 = bot.send_message(call.message.chat.id, first_element(list_of_questions[id]), reply_markup=keyboard)
+                bot.delete_message(call.message.chat.id, message1.id-1) #удаление предпоследнего сообщения
 
-
-
-@bot.message_handler(content_types=['text'])
-def get_text_messages(message):
-    print("a")
-
-
-def get_list_of_questions():
-    shuffled_list = shuffle(list_of_questions)
-    return shuffled_list
-
-@bot.message_handler(commands=['start'])
-def button(message):
-    markup = types.InlineKeyboardMarkup(row_width=1)
-    btn1 = types.InlineKeyboardButton(first_element(first_element(second_element(list_of_questions[id]))))
-    btn2 = types.InlineKeyboardButton(first_element(second_element(second_element(list_of_questions[id]))))
-
-
-def get_certain_question():
-    list = get_list_of_questions()
-    keyboard = telebot.types.InlineKeyboardMarkup()
-
-    item = types.InlineKeyboardButton
 
 def get_analize(keywords):
     global agents

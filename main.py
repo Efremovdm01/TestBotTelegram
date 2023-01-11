@@ -10,26 +10,6 @@ bot.set_webhook()
 
 #agent_photo = open(f"{new_agent_photo}.jpeg","rb")
 
-Sage_photo = open("Sage.jpeg","rb")
-Brimstone_photo = open("Brimstone.jpeg","rb")
-Viper_photo = open("viper.jpeg","rb")
-Omen_photo = open("omen.jpeg","rb")
-Killjoy_photo = open("killjoy.jpeg","rb")
-Cypher_photo = open("cypher.jpeg","rb")
-Sova_photo = open("sova.jpeg","rb")
-Phoenix_photo = open("phoenix.jpeg","rb")
-Jett_photo = open("jett.jpeg", "rb")
-Reyna_photo = open("reyna.jpeg", "rb")
-Raze_photo = open("raze.jpeg", "rb")
-Breach_photo = open("breach.jpeg", "rb")
-Skye_photo = open("skye.jpeg", "rb")
-Yoru_photo = open("yoru.jpeg", "rb")
-Astra_photo = open("astra.jpeg", "rb")
-KAYO_photo = open("kayo.jpeg", "rb")
-Chamber_photo = open("chamber.jpeg", "rb")
-Neon_photo = open("neon.jpeg", "rb")
-Fade_photo = open("fade.jpeg", "rb")
-Harbor_photo = open("harbor.jpeg","rb")
 
 
 agents = {
